@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from canasu.models.enrollment import Enrollment, enrollment_schema
 from canasu.models.admin import Admin, admin_schema
@@ -28,3 +29,15 @@ def list():
             'enrollment': enrollment
         })
     return jsonify(data), 200
+
+@admin.post('/login')
+def login():
+    email = request.json.get('email')
+    password = request.json.get('password')
+    admin = Admin.query.filter_by(email=email).first()
+    if admin is None:
+        return jsonify({'message': 'Admin not found'}), 404
+    if check_password_hash(admin.password, password):
+        access_token = create_access_token(identity=admin.id)
+        return jsonify({'access_token': access_token}), 200
+    return jsonify({'message': 'Invalid credentials'}), 401
