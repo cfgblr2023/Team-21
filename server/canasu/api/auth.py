@@ -35,6 +35,7 @@ def register_mentor():
         education = request.json.get('education')
         qualification = request.json.get('qualification')
         availability = request.json.get('availability')
+        project_id = request.json.get('project_id')
         
         mentor = Mentor(
             name=name,
@@ -48,6 +49,7 @@ def register_mentor():
             education=education,
             qualification=qualification,
             availability=availability,
+            project_id=project_id
         )
         
         db.session.add(mentor)
