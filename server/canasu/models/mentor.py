@@ -23,6 +23,6 @@ class Mentor(db.Model):
     
 class MentorSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'email', 'phone', 'password', 'gender', 'dob', 'address', 'languages', 'education', 'qualification', 'availability', 'created_at', 'updated_at')
+        fields = ('id', 'name', 'email', 'phone', 'gender', 'dob', 'address', 'languages', 'education', 'qualification', 'availability', 'created_at', 'updated_at')
                   
 mentor_schema = MentorSchema()
