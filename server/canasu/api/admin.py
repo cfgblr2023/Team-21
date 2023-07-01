@@ -7,6 +7,7 @@ from canasu.models.admin import Admin, admin_schema
 from canasu.models.mentor import Mentor, mentor_schema
 from canasu.models.mentee import Mentee, mentee_schema
 from canasu.models.project import Project, project_schema
+from canasu.database import db
 
 admin = Blueprint('admin', __name__, url_prefix='/api/admin')
 
@@ -41,3 +42,22 @@ def login():
         access_token = create_access_token(identity=admin.id)
         return jsonify({'access_token': access_token}), 200
     return jsonify({'message': 'Invalid credentials'}), 401
+
+@admin.post('/register')
+def register():
+    email = request.json.get('email')
+    password = request.json.get('password')
+    name=request.json.get('name')
+    phone = request.json.get('phone')
+    slots=0
+    if email is None or password is None or name is None or phone is None:
+        return jsonify({'message': 'Missing required fields'}), 400
+    if Admin.query.filter_by(email=email).first() is not None:
+        return jsonify({'message': 'Admin already exists'}), 400
+    admin = Admin(email=email, password=generate_password_hash(password), name=name, phone=phone, slots=slots)
+    db.session.add(admin)
+    db.session.commit()
+    
+    access_token = create_access_token(identity=admin.id)
+    return jsonify({'access_token': access_token}), 200
+
