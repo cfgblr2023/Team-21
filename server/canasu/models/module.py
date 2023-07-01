@@ -13,6 +13,6 @@ class Module(db.Model):
     
 class ModuleSchema(ma.Schema):
     class Meta:
-        fields = ('id','name','hours')
+        fields = ('id', 'name', 'description', 'hours', 'project_id')
                   
 module_schema = ModuleSchema()

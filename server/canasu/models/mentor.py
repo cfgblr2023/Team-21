@@ -3,7 +3,7 @@ from canasu.database import db, ma
 from sqlalchemy import func
 
 class Mentor(db.Model):
-    __tablename__ = 'mentors'
+    __tablename__ = 'mentor'
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String(100), nullable=False)
     email=db.Column(db.String(100), nullable=False, unique=True)

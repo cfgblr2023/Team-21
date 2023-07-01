@@ -6,6 +6,9 @@ from flask_cors import CORS
 from canasu.config import LocalDevelopmentConfig
 from canasu.database import db, ma
 from canasu.api.auth import auth
+from canasu.api.project import project_blueprint
+from canasu.api.module import module_blueprint
+from canasu.api.enrollment import enrollment
 
 # from canasu.api import register_api
 
@@ -18,6 +21,9 @@ def create_app(config_class=LocalDevelopmentConfig):
     ma.init_app(app)
     
     app.register_blueprint(auth)
+    app.register_blueprint(project_blueprint)
+    app.register_blueprint(module_blueprint)
+    app.register_blueprint(enrollment)
     
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     JWTManager(app)
