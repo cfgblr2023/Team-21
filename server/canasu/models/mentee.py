@@ -1,8 +1,8 @@
 from canasu.database import db, ma
 from sqlalchemy import func
 
-class Mentees(db.Model):
-    __tablename__ = 'mentees'
+class Mentee(db.Model):
+    __tablename__ = 'mentee'
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String(100), nullable=False)
     email=db.Column(db.String(100), nullable=False)

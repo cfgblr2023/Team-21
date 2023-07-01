@@ -5,6 +5,7 @@ from flask_cors import CORS
 
 from canasu.config import LocalDevelopmentConfig
 from canasu.database import db, ma
+from canasu.api.auth import auth
 
 # from canasu.api import register_api
 
@@ -15,6 +16,8 @@ def create_app(config_class=LocalDevelopmentConfig):
     
     db.init_app(app)
     ma.init_app(app)
+    
+    app.register_blueprint(auth)
     
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     JWTManager(app)

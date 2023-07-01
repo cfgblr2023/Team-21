@@ -1,9 +1,10 @@
 from flask import Blueprint, request, jsonify, make_response
-from canasu.models.mentor import Mentor
+from canasu.models.mentor import Mentor, mentor_schema
+from canasu.database import db
 
 auth = Blueprint('auth', __name__, url_prefix='/api/auth')
 
-@auth.route('/register/mentor', methods=['POST'])
+@auth.post('/register/mentor')
 def register():
     if request.json: 
         name = request.json.get('name')
@@ -31,3 +32,21 @@ def register():
             qualification=qualification,
             availability=availability
         )
+        
+        db.session.add(mentor)
+        db.session.commit()
+        
+        response = {
+            'message': 'Mentor registered successfully',
+            'mentor': mentor_schema.dump(mentor)
+        }
+        return jsonify(response), 201
+
+    else:
+        # Return an error response if the request body is not JSON
+        response = {
+            'message': 'Invalid request body'
+        }
+        return jsonify(response), 400
+
+ 
