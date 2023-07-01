@@ -12,8 +12,7 @@ from canasu.api.enrollment import enrollment
 from canasu.api.mentor import mentor
 from canasu.api.mentee import mentee
 from canasu.api.admin import admin
-
-# from canasu.api import register_api
+from canasu.api.session import session
 
 def create_app(config_class=LocalDevelopmentConfig):
     app = Flask(__name__, template_folder='templates', static_folder='static')
@@ -30,6 +29,7 @@ def create_app(config_class=LocalDevelopmentConfig):
     app.register_blueprint(mentor)
     app.register_blueprint(mentee)
     app.register_blueprint(admin)
+    app.register_blueprint(session)
     
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     JWTManager(app)
