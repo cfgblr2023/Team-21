@@ -46,6 +46,7 @@ def unenroll():
 def automap():
     enrollments = Enrollment.query.filter_by(mentor_id=None).all()
     mapping = []
+    unmapped_mentees = []
     for enrollment in enrollments:
         mentor = Mentor.query.filter_by(project_id=enrollment.project_id, available=True).first()
         mentee = Mentee.query.filter_by(id=enrollment.mentee_id).first()
@@ -58,8 +59,9 @@ def automap():
         enrollment= enrollment_schema.dump(enrollment)
         project_name = project_schema.dump(Project.query.filter_by(id=enrollment['project_id']).first())['name']
         if len(common_languages) == 0:
-            continue
-        mapping.append({'mentor_id': mentor['id'], 
+            unmapped_mentees.append(mentee)
+        else:
+            mapping.append({'mentor_id': mentor['id'], 
                         'mentee_id': mentee['id'], 
                         'project_id': enrollment['project_id'],
                         'mentor_name': mentor['name'],
