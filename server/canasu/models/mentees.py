@@ -1,0 +1,26 @@
+from canasu.database import db, ma
+from sqlalchemy import func
+
+class Mentees(db.Model):
+    __tablename__ = 'mentees'
+    id=db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.String(100), nullable=False)
+    email=db.Column(db.String(100), nullable=False)
+    phone=db.Column(db.String(100), nullable=False)
+    password=db.Column(db.String(100), nullable=False)
+    
+    dob=db.Column(db.String(100), nullable=True)
+    address=db.Column(db.String(100), nullable=True)
+    languages=db.Column(db.String(100), nullable=False)
+    education=db.Column(db.String(100), nullable=False)
+  
+    
+    created_at=db.Column(db.DateTime, nullable=False, server_default=func.now())
+    updated_at=db.Column(db.DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    
+    
+class MenteesSchema(ma.Schema):
+    class Meta:
+        fields = ('id','name', 'email', 'phone', 'password', 'dob', 'address', 'languages', 'education','created_at', 'updated_at')
+                  
+mentees_schema = MenteesSchema()
