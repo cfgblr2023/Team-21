@@ -20,6 +20,6 @@ class Mentee(db.Model):
     
 class MenteeSchema(ma.Schema):
     class Meta:
-        fields = ('id','name', 'email', 'phone', 'password', 'dob', 'address', 'languages', 'education','created_at', 'updated_at')
+        fields = ('id','name', 'email', 'phone', 'dob', 'address', 'languages', 'education','created_at', 'updated_at')
                   
 mentee_schema = MenteeSchema()

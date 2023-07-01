@@ -5,50 +5,48 @@ from canasu.models.mentor import Mentor, mentor_schema
 from canasu.models.mentee import Mentee, mentee_schema
 from canasu.models.admin import Admin, admin_schema
 from canasu.models.module import Module, module_schema
-from canasu.models.enrollment import Enrollment, enrollment_schema
 from canasu.models.project import Project, project_schema
+from canasu.models.enrollment import Enrollment, enrollment_schema
 from canasu.database import db
 
-mentor = Blueprint('mentor', __name__, url_prefix='/api/mentor')
+mentee = Blueprint('mentee', __name__, url_prefix='/api/mentee')
 
-@mentor.get('/<int:id>')
+@mentee.get('/<int:id>')
 @jwt_required()
-def mentorInfo(id):
+def menteeInfo(id):
     admin_id = get_jwt_identity()
     admin = Admin.query.get(admin_id)
     if not admin:
         return jsonify({'message': 'Not an admin'}), 404
-    mentor = Mentor.query.get(id)
-    if not mentor:
-        return jsonify({'message': 'Mentor not found'}), 404
-    mentor=mentor_schema.dump(mentor)
-    enrollment=Enrollment.query.filter_by(mentor_id=mentor['id']).first()
+    mentee = Mentee.query.get(id)
+    if not mentee:
+        return jsonify({'message': 'Mentee not found'}), 404
+    mentee=mentee_schema.dump(mentee)
+    enrollment=Enrollment.query.filter_by(mentee_id=mentee['id']).first()
     enrollment=enrollment_schema.dump(enrollment)
     for i in range(len(enrollment)):
-        mentee=Mentee.query.get(enrollment['mentee_id'])
-        mentee=mentee_schema.dump(mentee)
-        enrollment['name']=mentee['name']
-        enrollment['phone']=mentee['phone']
+        mentor=Mentor.query.get(enrollment['mentor_id'])
+        mentor=mentor_schema.dump(mentor)
+        enrollment['name']=mentor['name']
+        enrollment['phone']=mentor['phone']
         enrollment['project']=project_schema.dump(Project.query.get(enrollment['project_id']))['name']
         enrollment['module_1']=module_schema.dump(Module.query.get(enrollment['m_1_id']))['name']
         enrollment['module_2']=module_schema.dump(Module.query.get(enrollment['m_2_id']))['name']
         enrollment['module_3']=module_schema.dump(Module.query.get(enrollment['m_3_id']))['name']
         enrollment['module_4']=module_schema.dump(Module.query.get(enrollment['m_4_id']))['name']
-    
-    mentor['enrollment']=enrollment
-    return jsonify(mentor), 200
+     
+    mentee['enrollment']=enrollment
+    return jsonify(mentee), 200
 
-@mentor.get('/all')
+@mentee.get('/all')
 @jwt_required()
-def mentorAll():
+def menteeAll():
     admin_id = get_jwt_identity()
     admin = Admin.query.get(admin_id)
     if not admin:
         return jsonify({'message': 'Not an admin'}), 404
-    mentors = Mentor.query.all()
-    if not mentors:
-        return jsonify({'message': 'No mentors found'}), 404
-    mentors=mentor_schema.dump(mentors, many=True)
-    return jsonify(mentors), 200
-        
-    
+    mentees = Mentee.query.all()
+    if not mentees:
+        return jsonify({'message': 'No mentees found'}), 404
+    mentees=mentee_schema.dump(mentees, many=True)
+    return jsonify(mentees), 200
