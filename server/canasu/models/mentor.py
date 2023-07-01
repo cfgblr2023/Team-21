@@ -21,7 +21,6 @@ class Mentor(db.Model):
     created_at=db.Column(db.DateTime, nullable=False, server_default=func.now())
     updated_at=db.Column(db.DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
     
-    
 class MentorSchema(ma.Schema):
     class Meta:
         fields = ('id', 'name', 'email', 'phone', 'password', 'gender', 'dob', 'address', 'languages', 'education', 'qualification', 'availability', 'created_at', 'updated_at')

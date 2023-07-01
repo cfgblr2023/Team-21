@@ -13,7 +13,7 @@ class Mentee(db.Model):
     address=db.Column(db.String(100), nullable=True)
     languages=db.Column(db.String(100), nullable=False)
     education=db.Column(db.String(100), nullable=False)
-  
+    
     created_at=db.Column(db.DateTime, nullable=False, server_default=func.now())
     updated_at=db.Column(db.DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
     

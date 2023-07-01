@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from canasu.models.mentor import Mentor, mentor_schema
 from canasu.models.mentee import Mentee, mentee_schema
+from canasu.models.admin import Admin, admin_schema 
 from canasu.database import db
 
 auth = Blueprint('auth', __name__, url_prefix='/api/auth')
@@ -46,7 +47,7 @@ def register_mentor():
             languages=languages,
             education=education,
             qualification=qualification,
-            availability=availability
+            availability=availability,
         )
         
         db.session.add(mentor)
