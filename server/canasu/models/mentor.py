@@ -17,6 +17,7 @@ class Mentor(db.Model):
     education=db.Column(db.String(100), nullable=False)
     qualification=db.Column(db.String(100), nullable=False)
     availability=db.Column(db.Integer, nullable=False)
+    project_id=db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     
     created_at=db.Column(db.DateTime, nullable=False, server_default=func.now())
     updated_at=db.Column(db.DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
