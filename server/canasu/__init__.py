@@ -11,6 +11,7 @@ from canasu.api.module import module_blueprint
 from canasu.api.enrollment import enrollment
 from canasu.api.mentor import mentor
 from canasu.api.mentee import mentee
+from canasu.api.admin import admin
 
 # from canasu.api import register_api
 
@@ -28,6 +29,7 @@ def create_app(config_class=LocalDevelopmentConfig):
     app.register_blueprint(enrollment)
     app.register_blueprint(mentor)
     app.register_blueprint(mentee)
+    app.register_blueprint(admin)
     
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     JWTManager(app)

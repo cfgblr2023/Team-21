@@ -9,8 +9,7 @@ class Session(db.Model):
     menteeId=db.Column(db.Integer, db.ForeignKey('mentee.id'))
     adminId=db.Column(db.Integer, db.ForeignKey('admin.id'))
     hours=db.Column(db.Integer)
-    date = db.Column(db.Date)
-    
+    datetime=db.Column(db.DateTime, default=func.now())
     
 class SessionSchema(ma.Schema):
     class Meta:
