@@ -26,6 +26,7 @@ function App() {
           path="/signup"
           element={<Signup setIsLoggedIn={setIsLoggedIn} />}
         />
+            <Route path="/About" element= {<About/>} />
         <Route
           path="/dashboard"
           element={
