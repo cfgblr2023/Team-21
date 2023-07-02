@@ -16,32 +16,23 @@ function App() {
 
   return (
     <div className="w-screen min-h-screen flex flex-col">
-      {/* <AdminMap /> */}
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
 
       <Routes>
         <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
-        <Route
-          path="/login"
-          element={<Login setIsLoggedIn={setIsLoggedIn} />}
-        />
-        <Route
-          path="/signup"
-          element={<Signup setIsLoggedIn={setIsLoggedIn} />}
-        />
-            <Route path="/About" element= {<About/>} />
+        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/about" element={<About />} />
         <Route
           path="/dashboard"
           element={
             <PrivateRoute isLoggedIn={isLoggedIn}>
-              <Dashboard />
-              
+              <Dashboard />     
             </PrivateRoute>
           }
         />
+        <Route path="/adminmap" element={<AdminMap />} />
       </Routes>
-
-      {/* <AdminDash /> */}
     </div>
   );
 }
