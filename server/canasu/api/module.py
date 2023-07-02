@@ -19,3 +19,9 @@ def create_module():
     db.session.commit()
     module=Module.query.filter_by(name=name).filter_by(description=description).filter_by(hours=hours).filter_by(project_id=project_id).first()
     return module_schema.jsonify(module), 201
+
+@module_blueprint.get('/all')
+def get_all_modules():
+    modules=Module.query.all()
+    result=module_schema.dump(modules)
+    return jsonify(result)
