@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import About from "./pages/About";
 import { useState } from "react";
 import PrivateRoute from "./components/PrivateRoute";
 import AdminDash from "./components/AdminDash";
