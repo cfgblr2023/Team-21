@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 
 from canasu.database import db
 from canasu.models.project import Project, project_schema
+from canasu.models.module import Module, module_schema
 
 project_blueprint=Blueprint('project', __name__, url_prefix='/api/project')
 
@@ -20,7 +21,11 @@ def get_project(id):
     project=Project.query.get(id)
     if not project:
         return jsonify({'message': 'Project not found'}), 404
-    return project_schema.jsonify(project), 200
+    modules=Module.query.filter_by(project_id=id).all()
+    project=project_schema.dump(project)
+    modules=module_schema.dump(modules, many=True)
+    project['modules']=modules
+    return jsonify(project), 200
 
 @project_blueprint.get('/all')
 def get_all_projects():

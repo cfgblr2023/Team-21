@@ -4,10 +4,10 @@ from sqlalchemy import func
 class Session(db.Model):
     __tablename__ = 'session'
     id=db.Column(db.Integer, primary_key=True)
-    enrollmentId=db.Column(db.Integer, db.ForeignKey('mentor.id'))
-    mentorId=db.Column(db.Integer, db.ForeignKey('mentor.id'))
-    menteeId=db.Column(db.Integer, db.ForeignKey('mentee.id'))
-    adminId=db.Column(db.Integer, db.ForeignKey('admin.id'))
+    enrollment_id=db.Column(db.Integer, db.ForeignKey('mentor.id'))
+    mentor_id=db.Column(db.Integer, db.ForeignKey('mentor.id'))
+    mentee_id=db.Column(db.Integer, db.ForeignKey('mentee.id'))
+    admin_id=db.Column(db.Integer, db.ForeignKey('admin.id'))
     hours=db.Column(db.Integer)
     datetime=db.Column(db.DateTime, default=func.now())
     
