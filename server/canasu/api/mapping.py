@@ -68,4 +68,4 @@ def automap():
                         'mentee_name': mentee['name'],
                         'common_languages': common_languages,
                         'project_name': project_name})
-    return jsonify({'mapping': mapping}), 200
+    return jsonify({'mapping': mapping, 'unmapped_mentees': unmapped_mentees}), 200
