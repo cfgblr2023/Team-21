@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from 'react';
 
 function App() {
-  const [users, setUsers] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true)
-    fetch("http://192.168.82.222:5050/api/mapping/automap")
+    setLoading(true);
+    fetch("http://172.20.10.3:5050/api/mapping/automap")
       .then(response => response.json())
-      .then(json => setUsers(json))
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [])
+      .then(json => setUsers(json.mapping))
+      .catch(error => console.log(error))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="App">
@@ -21,8 +20,8 @@ function App() {
       ) : (
         <>
           <h1>Users</h1>
-          <table className="table table-striped">
-            <thead>
+          <table border={1}>
+            <tbody>
               <tr>
                 <th>Mentor ID</th>
                 <th>Mentee ID</th>
@@ -31,16 +30,14 @@ function App() {
                 <th>Mentee Name</th>
                 <th>Common Languages</th>
               </tr>
-            </thead>
-            <tbody>
-              {users.map(user => (
-                <tr key={user.mentor_id}>
+              {users.map((user, index) => (
+                <tr key={index}>
                   <td>{user.mentor_id}</td>
                   <td>{user.mentee_id}</td>
                   <td>{user.project_id}</td>
                   <td>{user.mentor_name}</td>
                   <td>{user.mentee_name}</td>
-                  <td>{user.common_languages}</td>
+                  <td>{user.common_languages.join(', ')}</td>
                 </tr>
               ))}
             </tbody>
@@ -48,7 +45,7 @@ function App() {
         </>
       )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
