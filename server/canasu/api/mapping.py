@@ -51,6 +51,9 @@ def automap():
         mentor = Mentor.query.filter_by(project_id=enrollment.project_id).first()
         mentee = Mentee.query.filter_by(id=enrollment.mentee_id).first()
         # compare languages
+        if mentor is None or mentee is None:
+            unmapped_mentees.append(mentee_schema.dump(mentee))
+            continue
         mentor=mentor_schema.dump(mentor)
         mentee=mentee_schema.dump(mentee)
         mentor_languages = mentor['languages'].split(',')
@@ -59,7 +62,7 @@ def automap():
         enrollment= enrollment_schema.dump(enrollment)
         project_name = project_schema.dump(Project.query.filter_by(id=enrollment['project_id']).first())['name']
         if len(common_languages) == 0:
-            unmapped_mentees.append(mentee)
+            unmapped_mentees.append(mentee_schema.dump(mentee))
         else:
             mapping.append({'mentor_id': mentor['id'], 
                         'mentee_id': mentee['id'], 
