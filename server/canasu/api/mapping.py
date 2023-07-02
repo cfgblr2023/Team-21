@@ -48,7 +48,7 @@ def automap():
     mapping = []
     unmapped_mentees = []
     for enrollment in enrollments:
-        mentor = Mentor.query.filter_by(project_id=enrollment.project_id, available=True).first()
+        mentor = Mentor.query.filter_by(project_id=enrollment.project_id).first()
         mentee = Mentee.query.filter_by(id=enrollment.mentee_id).first()
         # compare languages
         mentor=mentor_schema.dump(mentor)
