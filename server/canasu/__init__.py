@@ -13,6 +13,7 @@ from canasu.api.mentor import mentor
 from canasu.api.mentee import mentee
 from canasu.api.admin import admin
 from canasu.api.session import session
+from canasu.api.mapping import mapping
 
 def create_app(config_class=LocalDevelopmentConfig):
     app = Flask(__name__, template_folder='templates', static_folder='static')
@@ -30,6 +31,7 @@ def create_app(config_class=LocalDevelopmentConfig):
     app.register_blueprint(mentee)
     app.register_blueprint(admin)
     app.register_blueprint(session)
+    app.register_blueprint(mapping)
     
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     JWTManager(app)
